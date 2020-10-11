@@ -83,5 +83,38 @@ void create_new_study_again() {
       System.out.println(message);
   }
   ```
+- SimpleArgumentConverter 1개의 인자 값 명시적 변환
+  + @ValueSource를 custom convert 해줌 
+  ```
+  @Test
+  @ValueSource(ints = {10,20,40})
+  void parameterizedInt(@ConvertWith(StudyConverter.class) Study study) {
+      System.out.println(study.getLimit());
+  }
+  
+  static class StudyConverter extends SimpleArgumentConverter {
+      @Override
+      protected Object convert(Object source, Class<?> targetType) throws ArgumentConversionException {
+          return new Study(Integer.parseInt(source.toString()));
+      }
+  }
+  ```
+- ArgumentsAccessor 여러 인자 값을 조합해서 만듦
+  ```
+  @DisplayName("스터디 만들기")
+  @ParameterizedTest(name = "{index} {displayName} message={0}")
+  @CsvSource({"10, '자바 스터디'", "20, 스프링"})
+  void parameterizedTest(@AggregateWith(StudyAggregator.class) Study study) {
+      System.out.println(study);
+  }
+
+  static class StudyAggregator implements ArgumentsAggregator {
+      @Override
+      public Object aggregateArguments(ArgumentsAccessor accessor, ParameterContext context) throws ArgumentsAggregationException {
+          return new Study(accessor.getInteger(0), accessor.getString(1));
+      }
+  }
+  ```   
+     
 
 

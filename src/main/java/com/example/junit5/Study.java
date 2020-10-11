@@ -13,7 +13,11 @@ public class Study {
             throw new IllegalArgumentException("limit는 0보다 커야 한다");
         }
         this.limit = limit;
+    }
 
+    public Study(int limit, String name) {
+        this.limit = limit;
+        this.name = name;
     }
 
     public StudyStatus getStatus() {
