@@ -115,6 +115,16 @@ void create_new_study_again() {
       }
   }
   ```   
-     
 
+## 테스트 인스턴스 
+- 기존에는 메서드당 클래스를 만들었음. 서로간의 의존성이 없어야 한다. 
+- `@TestInstance(TestInstance.Lifecycle.PER_CLASS)` 사용하면 클래스당 1개의 인스턴스를 만들 수 있음
+  + 이 경우, @BeforeAll, @AfterAll이 static 아니여도 됨
+   
+## 테스트 순서
+- 특정 정해져있는 로직대로 테스트 실행되지만, 순서를 알 수 없으니 이를 의존해서는 안됌
+- 경우에 따라, 특정 순서대로 테스트를 실행하고 싶을 때도 있다. 
+  + `@TestInstance(TestInstance.Lifecycle.PER_CLASS)`와 `@TestMethodOrder`를 사용할 수 있다.    
 
+## 테스트 properties 설정 
+- test/resources 생성 - file - Project structure - module - 해당폴더 Test Resources로 설정 

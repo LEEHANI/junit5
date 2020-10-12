@@ -8,21 +8,20 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.aggregator.ArgumentsAggregationException;
 import org.junit.jupiter.params.aggregator.ArgumentsAggregator;
 import org.junit.jupiter.params.converter.ArgumentConversionException;
-import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.converter.SimpleArgumentConverter;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.EmptySource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class StudyTest {
+    int value = 1;
 
-
-
+    @Order(2)
     @DisplayName("스터디 만들기")
     @FastTest
 //    @Test
@@ -36,8 +35,11 @@ public class StudyTest {
                         () -> "스터디를 처음 만들면 상태값이 DRAFT여야 한다"),
                 () -> assertTrue(study.getLimit()>0, "스터디 최대 참 가능 인원은 0보다 커야한다")
         );
+
+        System.out.println("value: " + value++);
     }
 
+    @Order(1)
     @DisplayName("스터디 만들기 throw test")
     @FastTest
 //    @Test
@@ -45,8 +47,10 @@ public class StudyTest {
     void create_study_throw() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Study(-10));
         assertEquals("limit는 0보다 커야 한다", exception.getMessage());
+        System.out.println("value: " + value++);
     }
 
+    @Order(3)
     @DisplayName("스터디 만들기 throw test")
     @SlowTest
 //    @Test
