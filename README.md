@@ -1,3 +1,6 @@
+https://docs.google.com/document/d/1j6mU7Q5gng1mAJZUKUVya4Rs0Jvn5wn_bCUp3rq41nQ/edit
+
+
 # Junit5
 
 - java 8이상, Spring Boot 2.2+
@@ -64,7 +67,7 @@ void create_new_study_again() {
 ```
 
 ## 테스트 반복하기
-- @Repeatedest 
+- @RepeatedTest 
   + 반복 횟수와 테스트 이름을 설정할 수 있다.
   ```
   @RepeatedTest(value = 10, name = "{displayName}, {currentRepetition}/{totalRepetition}")
@@ -118,13 +121,43 @@ void create_new_study_again() {
 
 ## 테스트 인스턴스 
 - 기존에는 메서드당 클래스를 만들었음. 서로간의 의존성이 없어야 한다. 
-- `@TestInstance(TestInstance.Lifecycle.PER_CLASS)` 사용하면 클래스당 1개의 인스턴스를 만들 수 있음
+- `@TestInstance(TestInstance.Lifecycle.PER_CLASS)` 사용하면 클래스당 1개의 인스턴스를 만들도록 할 수 있음
   + 이 경우, @BeforeAll, @AfterAll이 static 아니여도 됨
    
 ## 테스트 순서
 - 특정 정해져있는 로직대로 테스트 실행되지만, 순서를 알 수 없으니 이를 의존해서는 안됌
 - 경우에 따라, 특정 순서대로 테스트를 실행하고 싶을 때도 있다. 
-  + `@TestInstance(TestInstance.Lifecycle.PER_CLASS)`와 `@TestMethodOrder`를 사용할 수 있다.    
+  + `@TestInstance(TestInstance.Lifecycle.PER_CLASS)`와 `@TestMethodOrder`를 사용할 수 있다.
+    + Alphanumeric, OrderAnnotation, Random    
 
 ## 테스트 properties 설정 
-- test/resources 생성 - file - Project structure - module - 해당폴더 Test Resources로 설정 
+- test/resources 생성 - file - Project structure - module - 해당폴더 Test Resources로 설정
+
+## 확장 모델 
+- JUnit 4의 확장 모델은 @RunWith(Runner), TestRule, MethodRule.
+- JUnit 5의 확장 모델은 단 하나, Extension.
+
+- 확장팩 등록 방법
+  + 선언적인 등록 `@ExtendWith`
+- 프로그래밍 등록 @RegisterExtension
+  + 자동 등록 자바 ServiceLoader 이용
+
+- 확장팩 만드는 방법
+  + 테스트 실행 조건
+  + 테스트 인스턴스 팩토리
+  + 테스트 인스턴스 후-처리기
+  + 테스트 매개변수 리졸버
+  + 테스트 라이프사이클 콜백
+  + 예외 처리
+
+## Junit4 -> Junit5 마이그레이션 
+- junit-vintage-engine을 의존성으로 추가하면, JUnit 5의 junit-platform으로 JUnit 3과 4로 작성된 테스트를 실행할 수 있다.
+- @Ignore -> @Disable
+- @Before -> @BeforeEach
+- @BeforeClass -> @BeforeAll
+- @After -> @AfterEach
+- @After -> @AfterEach
+- @AfterClass -> @AfterAll
+- @Category(Class) -> @Tag(String)
+
+
