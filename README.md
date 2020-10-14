@@ -161,3 +161,8 @@ void create_new_study_again() {
 - @Category(Class) -> @Tag(String)
 
 
+## Mockito
+- Mock 객체를 쉽게 만들고 관리하하고 검증할 수 있는 방법 
+- 모든 의존성을 mock해야만 단위 테스트라고 대부분이 생각함 
+- 클래스의 단위가 아닌 행위의 단위라고도 생각할 수 있음 => 팀마다 정하면 될듯 
+- spring-boot-starter-test가 알아서 mockito 추가해줌 
