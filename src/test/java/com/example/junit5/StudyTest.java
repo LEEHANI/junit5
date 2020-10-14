@@ -1,7 +1,8 @@
 package com.example.junit5;
 
+import com.example.junit5.domain.Study;
+import com.example.junit5.study.StudyStatus;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.AggregateWith;
@@ -35,7 +36,7 @@ public class StudyTest {
                 () -> assertNotNull(study),
                 () -> assertEquals(StudyStatus.DRAFT, study.getStatus(),
                         () -> "스터디를 처음 만들면 상태값이 DRAFT여야 한다"),
-                () -> assertTrue(study.getLimit()>0, "스터디 최대 참 가능 인원은 0보다 커야한다")
+                () -> assertTrue(study.getLimitCount()>0, "스터디 최대 참 가능 인원은 0보다 커야한다")
         );
 
         System.out.println("value: " + value++);
