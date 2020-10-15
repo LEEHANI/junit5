@@ -192,3 +192,18 @@ void create_new_study_again() {
     
     }
     ```
+
+## Mock 객체 Stubbing
+- 기본
+  + `when(memberService.findById(1L)).thenReturn(Optional.of(member));`
+- 예외 발생 시키기 
+  + `when(memberService.findById(1L)).thenThrow(IllegalArgumentException.class);`
+- void 일때 예외 발생 시키기 
+  + `doThrow(new IllegalArgumentException()).when(memberService).validate(1L);`
+- 동일한 메서드 호출시 마다 다른 행동
+  + ```
+    when(memberService.findById(1L))
+            .thenReturn(Optional.of(member))
+            .thenThrow(new RuntimeException())
+            .thenReturn(Optional.empty());
+    ```  
