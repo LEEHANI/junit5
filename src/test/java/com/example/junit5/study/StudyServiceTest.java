@@ -11,8 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class StudyServiceTest {
@@ -87,5 +86,10 @@ class StudyServiceTest {
         assertNotNull(study.getOwner());
         assertEquals(member, study.getOwner());
 
+    }
+
+    @Test
+    void 호출됐는지_확인() {
+        verify(memberService, never()).validate(any());
     }
  }

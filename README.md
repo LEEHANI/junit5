@@ -207,3 +207,7 @@ void create_new_study_again() {
             .thenThrow(new RuntimeException())
             .thenReturn(Optional.empty());
     ```  
+    
+## Mock 객체 확인 
+- verify를 사용하면 몇 번 호출됐는지, 어떤 순서대로 호출했는지, 특정 시간 이내에 호출됐는지 등을 알 수 있다. 
+- `verify(memberService, never()).validate(any())`
