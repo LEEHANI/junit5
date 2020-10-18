@@ -211,3 +211,11 @@ void create_new_study_again() {
 ## Mock 객체 확인 
 - verify를 사용하면 몇 번 호출됐는지, 어떤 순서대로 호출했는지, 특정 시간 이내에 호출됐는지 등을 알 수 있다. 
 - `verify(memberService, never()).validate(any())`
+
+## Mockito BDD 스타일 API 
+- BDD(behavior driven development): 애플리케이션이 어떻게 “행동”해야 하는지에 대한 공통된 이해를 구성하는 방법으로, TDD에서 창안했다.
+- //given //when //then 
+- Mockito를 BDDMockito 클래스로 BDD 스타일로 바꿀 수 있다. 
+- Mockito.when -> BDDMockito.given
+- Mockito.verify -> BDDMockito.then
+- https://www.baeldung.com/bdd-mockito

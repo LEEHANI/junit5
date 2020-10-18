@@ -3,9 +3,12 @@ package com.example.junit5.study;
 import com.example.junit5.domain.Member;
 import com.example.junit5.domain.Study;
 import com.example.junit5.member.MemberService;
+import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.BDDMockito;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -92,4 +95,5 @@ class StudyServiceTest {
     void 호출됐는지_확인() {
         verify(memberService, never()).validate(any());
     }
+
  }
