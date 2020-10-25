@@ -19,7 +19,7 @@ public class StudyService {
         if (member == null) {
             throw new IllegalArgumentException("Member doesn't exist for id: '" + memberId + "'");
         }
-        study.setOwner(member);
+        study.setOwnerId(member.getId());
         return repository.save(study);
     }
 

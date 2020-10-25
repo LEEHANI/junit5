@@ -219,3 +219,53 @@ void create_new_study_again() {
 - Mockito.when -> BDDMockito.given
 - Mockito.verify -> BDDMockito.then
 - https://www.baeldung.com/bdd-mockito
+
+## Testcontainers 소개 
+- https://www.testcontainers.org/modules/databases/jdbc/
+- 인메모리 디비를 사용하면 빠르지만, 인메모리 디비와 개발 디비가 다르면 차이점이 발생될 수 있다. 가령 isolation, 쿼리 등
+- Docker를 이용하면 개발과 동일한 테스트 환경을 만들기 편하다.
+- 도커를 사용하므로, DB 설정을 하거나 별도의 프로그램 또는 스크립트를 실행할 필요가 없다.  
+- 도커를 띄우므로 테스트가 느려질 수 있다.
+
+## Testcontainers 설치
+- gradle
+  ```
+  implementation 'org.postgresql:postgresql'
+  testCompile "org.testcontainers:postgresql:1.15.0-rc2"
+  testImplementation "org.testcontainers:junit-jupiter:1.12.4"
+  ```
+- properties
+  ```
+  spring.datasource.url=jdbc:tc:postgresql:///studytest
+  spring.datasource.driver-class-name=org.testcontainers.jdbc.ContainerDatabaseDriver
+  
+  spring.jpa.hibernate.ddl-auto=create-drop
+  ```
+- ```
+  static PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer()
+              .withDatabaseName("studytest");
+  
+  @BeforeAll
+  static void beforeAll() {
+      postgreSQLContainer.start();
+      System.out.println(postgreSQLContainer.getJdbcUrl());
+  }
+
+  @AfterAll
+  static void afterAll() {
+      postgreSQLContainer.stop();
+  }
+  ```
+- @Testcontainers로 @Container를 사용한 필드를 찾아서 컨테이너 라이프사이클 관련 메소드를 실행해준다
+- @Container 모든 테스트마다 컨테이너를 재시작한다.
+  + ```
+    @Container
+    PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer()
+                .withDatabaseName("studytest");
+    ```
+  + 스태틱 필드에 사용하면 클래스 내부 모든 테스트에서 동일한 컨테이너를 재사용한다.
+  + ```
+    @Container
+    static PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer()
+                .withDatabaseName("studytest");
+    ```  

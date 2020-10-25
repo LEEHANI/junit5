@@ -3,30 +3,53 @@ package com.example.junit5.study;
 import com.example.junit5.domain.Member;
 import com.example.junit5.domain.Study;
 import com.example.junit5.member.MemberService;
-import org.assertj.core.api.BDDAssertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
-import org.mockito.InOrder;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
 
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
+@Testcontainers
 class StudyServiceTest {
 
     @Mock
     MemberService memberService;
 
-    @Mock
-    StudyRepository studyRepository;
+    @Autowired StudyRepository studyRepository;
+
+    //여러 테스트에서 공유하기 위해 static 선언
+    @Container
+    static PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer()
+            .withDatabaseName("studytest");
+
+    @BeforeEach
+    void beforeEach() {
+        studyRepository.deleteAll();
+    }
+
+//    @BeforeAll
+//    static void beforeAll() {
+//        postgreSQLContainer.start();
+//        System.out.println(postgreSQLContainer.getJdbcUrl());
+//    }
+//
+//    @AfterAll
+//    static void afterAll() {
+//        postgreSQLContainer.stop();
+//    }
 
     @Test
     void createStudy() {
@@ -34,7 +57,7 @@ class StudyServiceTest {
         member.setId(1L);
         member.setEmail("e@email.com");
 
-        when(memberService.findById(1L)).thenReturn(Optional.of(member));
+//        when(memberService.findById(1L)).thenReturn(Optional.of(member));
 
         StudyService studyService = new StudyService(memberService, studyRepository);
         assertNotNull(studyService);
@@ -80,17 +103,15 @@ class StudyServiceTest {
         member.setEmail("e@email.com");
 
         Study study = new Study(10, "test");
-        study.setOwner(member);
+        study.setOwnerId(member.getId());
 
         // memberService 객체에 findById 메소드를 1L 값으로 호출하면 Optional.of(member) 객체를 리턴하도록 Stubbing
-        // studyRepository 객체에 save 메소드를 study 객체로 호출하면 study 객체 그대로 리턴하도록 Stubbing
         when(memberService.findById(1L)).thenReturn(Optional.of(member));
-        when(studyRepository.save(study)).thenReturn(study);
 
         studyService.createNewStudy(1L, study);
 
-        assertNotNull(study.getOwner());
-        assertEquals(member, study.getOwner());
+        assertNotNull(study.getOwnerId());
+        assertEquals(member.getId(), study.getOwnerId());
 
     }
 
@@ -105,8 +126,6 @@ class StudyServiceTest {
         // Given
         StudyService studyService = new StudyService(memberService, studyRepository);
         Study study = new Study(10, "더 자바, 테스트");
-        // studyRepository Mock 객체의 save 메소드를호출 시 study를 리턴하도록 만들기.
-        given(studyRepository.save(study)).willReturn(study);
 
         // When
         Study result = studyService.openStudy(study);
