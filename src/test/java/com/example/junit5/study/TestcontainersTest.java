@@ -11,7 +11,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.util.TestPropertyValues;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -25,6 +29,7 @@ import static org.mockito.BDDMockito.*;
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
 @Testcontainers
+//@ContextConfiguration(initializers = TestcontainersTest.ContainerPropertyInitializer.class)
 class TestcontainersTest {
 
     @Mock
@@ -140,5 +145,13 @@ class TestcontainersTest {
         then(memberService).should(times(1)).notify(study);
     }
 
+//    static class ContainerPropertyInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+//
+//        @Override
+//        public void initialize(ConfigurableApplicationContext applicationContext) {
+//            TestPropertyValues.of("container.port=" + postgreSQLContainer.getMappedPort(5432))
+//                    .applyTo(applicationContext.getEnvironment());
+//        }
+//    }
 
 }

@@ -269,3 +269,15 @@ void create_new_study_again() {
     static PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer()
                 .withDatabaseName("studytest");
     ```  
+    
+## Testcontainers 도커 Compose 사용하기 
+- docker-compose는 도커 컨데이너를 여러 개 동시에 띄울 때, 서로 간의 의존성 및 네트워크 등을 설정할 수 있는 방법
+- ```
+  @Container
+  static DockerComposeContainer composeContainer = new DockerComposeContainer(new File("src/test/resources/docker-compose.yml"));
+  ```
+- 테스트에 사용하는 `src/test/resources/docker-compose`는 랜덤하게 가용한 포트를 사용해야 하므로 port mapping을 하지 않는 게 좋다
+  + ```
+    ports:
+    - 5432
+    ```
