@@ -295,3 +295,25 @@ void create_new_study_again() {
 - 첫 번째 샘플데이터의 시간이 오래걸리는 이유는, 서블릿을 최초로 만들기 때문이다. 
 ![JMeter_view_results](images/JMeter_view_results.png) 
  
+## Chaos Monkey
+- 운영 중 이슈를 테스트 하는 툴. `https://codecentric.github.io/chaos-monkey-spring-boot/2.1.1/#_customize_watcher`
+  + 공격대상(Watcher)
+    + @RestController, @Controller, @Service, @Repository, @Component
+  + 공격 유형(Assaults)
+    + 응답 지연 (Latency Assault), 예외 발생 (Exception Assault), 애플리케이션 종료 (AppKiller Assault), 메모리 누수 (Memory Assault)
+- 스프링 부트에서 카오스 멍키를 손쉽게 적용해 볼 수 있다
+  + gradle
+    ```
+    compile group: 'de.codecentric', name: 'chaos-monkey-spring-boot', version: '2.3.0'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.4.2'
+    ```
+    properties
+    ```
+    spring.profiles.active=chaos-monkey
+    
+    management.endpoint.chaosmonkey.enabled=true
+    management.endpoints.web.exposure.include=health,info,chaosmonkey
+    
+    chaos.monkey.watcher.repository=true
+    ```
+- JMeter를 실행 후 Chaos Monkey를 활성화시키면 테스트를 진행해 볼 수 있다.  
