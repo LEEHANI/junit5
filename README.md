@@ -281,3 +281,17 @@ void create_new_study_again() {
     ports:
     - 5432
     ```
+
+## JMeter
+- 성능 측정 및 부하(load) 테스트 기능을 제공하는 오픈 소스 자바 애플리케이션 
+- https://jmeter.apache.org/download_jmeter.cgi
+- 주요 기능
+  + Thread Group: 한 쓰레드 당 유저 한명
+  + Sampler: 어떤 유저가 해야 하는 액션
+  + Listener: 응답을 받았을 할 일 (리포팅, 검증, 그래프 그리기 등)
+  + Configuration: Sampler 또는 Listener가 사용할 설정 값 (쿠키, JDBC 커넥션 등)
+  + Assertion: 응답이 성공적인지 확인하는 방법 (응답 코드, 본문 내용 등)
+- 로컬에서 하는 테스트는 웹 서버, jmeter를 동시에 실행하고 있으므로 정확하지 않다.
+- 첫 번째 샘플데이터의 시간이 오래걸리는 이유는, 서블릿을 최초로 만들기 때문이다. 
+![JMeter_view_results](images/JMeter_view_results.png) 
+ 
