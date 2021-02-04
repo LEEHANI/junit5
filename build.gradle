@@ -36,6 +36,9 @@ dependencies {
     compile group: 'de.codecentric', name: 'chaos-monkey-spring-boot', version: '2.3.0'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.4.2'
+    // https://mvnrepository.com/artifact/com.tngtech.archunit/archunit
+    testCompile group: 'com.tngtech.archunit', name: 'archunit', version: '0.14.1'
+
 }
 
 test {

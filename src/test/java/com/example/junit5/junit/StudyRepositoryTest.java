@@ -1,6 +1,7 @@
-package com.example.junit5.study;
+package com.example.junit5.junit;
 
 import com.example.junit5.domain.Study;
+import com.example.junit5.study.StudyRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

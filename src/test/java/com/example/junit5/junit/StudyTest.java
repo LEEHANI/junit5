@@ -1,7 +1,9 @@
-package com.example.junit5;
+package com.example.junit5.junit;
 
+import com.example.junit5.FastTest;
+import com.example.junit5.SlowTest;
 import com.example.junit5.domain.Study;
-import com.example.junit5.study.StudyStatus;
+import com.example.junit5.domain.StudyStatus;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.ParameterizedTest;

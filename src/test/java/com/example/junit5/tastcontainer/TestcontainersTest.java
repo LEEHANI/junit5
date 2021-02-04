@@ -1,8 +1,12 @@
-package com.example.junit5.study;
+package com.example.junit5.tastcontainer;
 
 import com.example.junit5.domain.Member;
 import com.example.junit5.domain.Study;
 import com.example.junit5.member.MemberService;
+import com.example.junit5.study.StudyRepository;
+import com.example.junit5.study.StudyService;
+import com.example.junit5.domain.StudyStatus;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,11 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -35,7 +35,8 @@ class TestcontainersTest {
     @Mock
     MemberService memberService;
 
-    @Autowired StudyRepository studyRepository;
+    @Autowired
+    StudyRepository studyRepository;
 
     //여러 테스트에서 공유하기 위해 static 선언
     @Container
@@ -138,7 +139,7 @@ class TestcontainersTest {
         Study result = studyService.openStudy(study);
 
         // study의 status가 OPENED로 변경됐는지 확인
-        assertEquals(StudyStatus.OPENED, result.getStatus());
+        Assertions.assertEquals(StudyStatus.OPENED, result.getStatus());
         // study의 openedDataTime이 null이 아닌지 확인
         assertNotNull(study.getOpenedDateTime());
         // memberService의 notify(study)가 호출 됐는지 확인.

@@ -1,7 +1,9 @@
-package com.example.junit5.study;
+package com.example.junit5.tastcontainer;
 
 import com.example.junit5.domain.Member;
 import com.example.junit5.member.MemberService;
+import com.example.junit5.study.StudyRepository;
+import com.example.junit5.study.StudyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +29,8 @@ class DockerComposeTest {
     @Mock
     MemberService memberService;
 
-    @Autowired StudyRepository studyRepository;
+    @Autowired
+    StudyRepository studyRepository;
 
     @Container
     static DockerComposeContainer composeContainer = new DockerComposeContainer(new File("src/test/resources/docker-compose.yml"));

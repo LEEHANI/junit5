@@ -316,4 +316,8 @@ void create_new_study_again() {
     
     chaos.monkey.watcher.repository=true
     ```
-- JMeter를 실행 후 Chaos Monkey를 활성화시키면 테스트를 진행해 볼 수 있다.  
+- JMeter를 실행 후 Chaos Monkey를 활성화시키면 테스트를 진행해 볼 수 있다.
+
+## ArchUnit
+- 애플리케이션의 아키텍처를 테스트 할 수 있는 오픈 소스 라이브러리로, 패키지, 클래스, 레이어, 슬라이스 간의 의존성을 확인할 수 있는 기능을 제공한다.
+- Study -> Member, Study, Member -> Domain   
